@@ -1,0 +1,45 @@
+
+1) db
+Comment:  To show the current database name
+
+2) use <dbName>
+Comment:  To switch the database
+Ex: use collage
+
+3) show collections	
+Comment: To show the all tables list. 
+
+4) db.collectionName.find()
+Comment: To get all records
+Ex: db.students.find() 
+
+5) db.collectionName.insertOne( { field: value } );
+Comment: Insert records
+Ex:
+	A)  Single records
+		db.students.insertOne( { name: 'sunil' } );
+	B) Multiple records
+	db.inventory.insertMany([
+	   { item: "journal", qty: 25, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+	   { item: "notebook", qty: 50, size: { h: 8.5, w: 11, uom: "in" }, status: "A" },
+	   { item: "paper", qty: 100, size: { h: 8.5, w: 11, uom: "in" }, status: "D" },
+	   { item: "planner", qty: 75, size: { h: 22.85, w: 30, uom: "cm" }, status: "D" },
+	   { item: "postcard", qty: 45, size: { h: 10, w: 15.25, uom: "cm" }, status: "A" }
+	]);
+
+6) Commands use to Search Records
+	A) db.inventory.find( { field: value } );
+		Comment: Search records
+		Ex: db.inventory.find( { status: "D" } );
+
+	B)  IN
+		db.inventory.find( { status: { $in: [ "A", "D" ] } } );
+		Comment: From the inventory collection where status equals either "A" or "D":
+
+	C) Less than
+		Comment: Retrieves all documents in the inventory collection where the status equals "A" and qty is less than ($lt) 30
+		Ex: db.inventory.find( { status: "A", qty: { $lt: 30 } } )
+		Mysql: SELECT * FROM inventory WHERE status = "A" AND qty < 30
+
+	D) Specify OR Conditions
+		Ex: db.inventory.find( { $or: [ { status: "A" }, { qty: { $lt: 30 } } ] } )
